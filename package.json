@@ -1,0 +1,39 @@
+{
+  "name": "acadigital",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+ "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/index.js",
+    "dev": "tsnd --respawn --clear src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OscarCalle0/AcaDigital.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OscarCalle0/AcaDigital/issues"
+  },
+  "homepage": "https://github.com/OscarCalle0/AcaDigital#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "fastify": "^5.6.1",
+    "pg": "^8.16.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3",
+    "uuid": "^13.0.0",
+    "zod": "^4.1.12"
+ 
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "@types/pg": "^8.15.6",
+    "@types/sequelize": "^4.28.20",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
