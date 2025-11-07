@@ -1,7 +1,7 @@
 // src/core/infraestructura/postgres/repositorio/asignatura.pg.repository.ts
 
 import type { IAsignaturaRepositorio } from '../../../dominio/interfaces/repositorio/IAsignaturaRepositorio.js';
-import { Asignatura, TipoAsignatura } from '../../../dominio/entidades/Asignatura/Asignatura.js';
+import { Asignatura, TipoAsignatura } from '../../../dominio/entidades/asignatura/Asignatura.js';
 
 // ⚠️ MOCK DE BASE DE DATOS EN MEMORIA PARA PRUEBAS
 // Almacena los datos simulados

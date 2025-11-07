@@ -1,4 +1,4 @@
-import { Asignatura } from '../../../dominio/entidades/Asignatura/Asignatura.js';
+import { Asignatura } from '../../../dominio/entidades/asignatura/Asignatura.js';
 import type { IAsignaturaRepositorio } from '../../../dominio/interfaces/repositorio/IAsignaturaRepositorio.js';
 
 

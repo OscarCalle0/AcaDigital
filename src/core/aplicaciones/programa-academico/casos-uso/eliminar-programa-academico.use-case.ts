@@ -1,4 +1,4 @@
-import type { IProgramaAcademicoRepositorio } from '../../../dominio/repositorio/IProgramaAcademicoRepositorio.js';
+import type { IProgramaAcademicoRepositorio } from '../../../dominio/interfaces/repositorio/IProgramaAcademicoRepositorio.js';
 
 export class EliminarProgramaAcademicoUseCase {
   constructor(private readonly programaRepository: IProgramaAcademicoRepositorio) {}

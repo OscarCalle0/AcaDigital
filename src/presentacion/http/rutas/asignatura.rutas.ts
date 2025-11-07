@@ -1,5 +1,5 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { TipoAsignatura } from '../../../core/dominio/entidades/Asignatura/Asignatura.js';
+import { TipoAsignatura } from '../../../core/dominio/entidades/asignatura/Asignatura.js';
 import { CrearAsignaturaUseCase } from '../../../core/aplicaciones/asignatura/casos-uso/CrearAsignaturaUseCase.js';
 import { ObtenerAsignaturasUseCase } from '../../../core/aplicaciones/asignatura/casos-uso/ObtenerAsignaturasUseCase.js';
 import { ActualizarAsignaturaUseCase } from '../../../core/aplicaciones/asignatura/casos-uso/ActualizarAsignaturaUseCase.js';

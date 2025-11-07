@@ -1,4 +1,4 @@
-import type { IProgramaAcademico as ProgramaAcademicoType } from "../interfaces/IProgramaAcademico.js";
+import type { IProgramaAcademico as ProgramaAcademicoType } from "../IProgramaAcademico.js";
 
 export interface IProgramaAcademicoRepositorio {
     crear(programa: ProgramaAcademicoType):

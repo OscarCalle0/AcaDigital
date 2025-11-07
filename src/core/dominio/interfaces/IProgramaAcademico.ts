@@ -1,5 +1,5 @@
 import type { NivelEducativo, Modalidad } from "../Programa-Academico/NivelYModalidad";
-import type { Duracion } from "../Programa-Academico/Duracion.js";
+import type { Duracion } from "../entidades/programa-academico/Duracion.js";
 
 export interface IProgramaAcademico{
     getId(): string;

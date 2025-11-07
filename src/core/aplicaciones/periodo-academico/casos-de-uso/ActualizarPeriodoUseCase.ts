@@ -1,7 +1,7 @@
-import { PeriodoAcademico } from '../../../dominio/entidades/Periodo-Academico/PeriodoAcademico.js';
+import { PeriodoAcademico } from '../../../dominio/entidades/periodo-academico/PeriodoAcademico.js';
 import type { IPeriodoAcademico } from '../../../dominio/interfaces/IPeriodoAcademico.js';
 import type { IPeriodoRepositorio } from '../../../dominio/interfaces/repositorio/IPeriodoAcademicoRepositorio.js';
-import type { ActualizarPeriodoDTO } from '../Dtos/ActualizarPeriodoDTO.js';
+import type { ActualizarPeriodoDTO } from '../dtos/ActualizarPeriodoDTO.js';
 
 export class ActualizarPeriodoUseCase {
     constructor(private repo: IPeriodoRepositorio) { };

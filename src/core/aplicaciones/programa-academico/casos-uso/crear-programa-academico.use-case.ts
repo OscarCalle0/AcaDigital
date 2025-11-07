@@ -1,8 +1,8 @@
 import type { IProgramaAcademico } from '../../../dominio/interfaces/IProgramaAcademico.js';
-import type { IProgramaAcademicoRepositorio } from '../../../dominio/repositorio/IProgramaAcademicoRepositorio.js';
-import type { CrearProgramaDto } from '../dto/crear-programa.dto.js';
-import { Duracion } from '../../../dominio/Programa-Academico/Duracion.js';
-import { ProgramaAcademico } from '../../../dominio/Programa-Academico/ProgramaAcademico.js';
+import type { IProgramaAcademicoRepositorio } from '../../../dominio/interfaces/repositorio/IProgramaAcademicoRepositorio.js';
+import type { CrearProgramaDto } from '../dtos/crear-programa.dto.js';
+import { Duracion } from '../../../dominio/entidades/programa-academico/Duracion.js';
+import { ProgramaAcademico } from '../../../dominio/entidades/programa-academico/ProgramaAcademico.js';
 
 export class CrearProgramaAcademicoUseCase {
   constructor(private readonly programaRepository: IProgramaAcademicoRepositorio) {}
