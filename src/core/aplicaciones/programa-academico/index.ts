@@ -9,10 +9,10 @@ export { EliminarProgramaAcademicoUseCase } from './casos-uso/eliminar-programa-
 export { 
   crearProgramaSchema, 
   type CrearProgramaDto 
-} from './dto/crear-programa.dto.js';
+} from './dtos/crear-programa.dto.js';
 
 export { 
   actualizarProgramaSchema, 
   type ActualizarProgramaDto 
-} from './dto/actualizar-programa.dto.js';
+} from './dtos/actualizar-programa.dto.js';
 

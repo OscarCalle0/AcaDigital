@@ -1,6 +1,6 @@
-import { Asignatura } from '../../../dominio/entidades/Asignatura/Asignatura.js';
+import { Asignatura } from '../../../dominio/entidades/asignatura/Asignatura.js';
 import type { IAsignaturaRepositorio } from '../../../dominio/interfaces/repositorio/IAsignaturaRepositorio.js';
-import type { CrearAsignaturaDTO } from '../Dtos/CrearAsignaturaDTO.js';
+import type { CrearAsignaturaDTO } from '../dtos/CrearAsignaturaDTO.js';
 
 export class CrearAsignaturaUseCase {
   constructor(private readonly repositorio: IAsignaturaRepositorio) {}

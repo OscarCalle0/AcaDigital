@@ -1,9 +1,9 @@
 import { Pool, QueryResult } from 'pg';
-import type { IProgramaAcademicoRepositorio } from '../../../dominio/repositorio/IProgramaAcademicoRepositorio.js';
+import type { IProgramaAcademicoRepositorio } from '../../../dominio/interfaces/repositorio/IProgramaAcademicoRepositorio.js';
 import type { IProgramaAcademico } from '../../../dominio/interfaces/IProgramaAcademico.js';
-import { ProgramaAcademico } from '../../../dominio/Programa-Academico/ProgramaAcademico.js';
-import { Duracion } from '../../../dominio/Programa-Academico/Duracion.js';
-import { NivelEducativo, Modalidad } from '../../../dominio/Programa-Academico/NivelYModalidad.js';
+import { ProgramaAcademico } from '../../../dominio/entidades/programa-academico/ProgramaAcademico.js';
+import { Duracion } from '../../../dominio/entidades/programa-academico/Duracion.js';
+import { NivelEducativo, Modalidad } from '../../../dominio/entidades/programa-academico/NivelYModalidad.js';
 
 export class PostgresProgramaAcademicoRepository implements IProgramaAcademicoRepositorio {
   private pool: Pool;

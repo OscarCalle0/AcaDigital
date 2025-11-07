@@ -1,4 +1,4 @@
-import { Asignatura } from '../../entidades/Asignatura/Asignatura.js';
+import { Asignatura } from '../../entidades/asignatura/Asignatura.js';
 
 export interface IAsignaturaRepositorio {
   save(asignatura: Asignatura): Promise<Asignatura>;

@@ -1,4 +1,4 @@
-import { TipoAsignatura } from '../../../dominio/entidades/Asignatura/Asignatura.js';
+import { TipoAsignatura } from '../../../dominio/entidades/asignatura/Asignatura.js';
 
 export interface ActualizarAsignaturaDTO {
   id: number;

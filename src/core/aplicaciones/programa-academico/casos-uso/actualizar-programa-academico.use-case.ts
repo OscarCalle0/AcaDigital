@@ -1,6 +1,6 @@
 import type { IProgramaAcademico } from '../../../dominio/interfaces/IProgramaAcademico.js';
-import type { IProgramaAcademicoRepositorio } from '../../../dominio/repositorio/IProgramaAcademicoRepositorio.js';
-import type { ActualizarProgramaDto } from '../dto/actualizar-programa.dto.js';
+import type { IProgramaAcademicoRepositorio } from '../../../dominio/interfaces/repositorio/IProgramaAcademicoRepositorio.js';
+import type { ActualizarProgramaDto } from '../dtos/actualizar-programa.dto.js';
 
 export class ActualizarProgramaAcademicoUseCase {
   constructor(private readonly programaRepository: IProgramaAcademicoRepositorio) {}

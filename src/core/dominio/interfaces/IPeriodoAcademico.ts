@@ -1,4 +1,4 @@
-import type { EstadoPeriodo } from "../entidades/Periodo-Academico/EstadoPeriodo.js";
+import type { EstadoPeriodo } from "../entidades/periodo-academico/EstadoPeriodo.js";
 export interface IPeriodoAcademico {
     id: string;
     nombre: string;

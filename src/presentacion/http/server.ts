@@ -9,7 +9,7 @@ import {
   EliminarPeriodoUseCase
 } from '../../core/aplicaciones/periodo-academico/index.js';
 import { PostgresPeriodoAcademicoRepository } from '../../core/infraestructura/postgres/repositorio/periodo-academico.pg.repository.js';
-import { registerPeriodoAcademicoRoutes } from './routes/periodo-academico.routes.js';
+import { registerPeriodoAcademicoRoutes } from './rutas/periodo-academico.rutas.js';
 
 //asignatura
 import {
@@ -20,7 +20,7 @@ import {
   EliminarAsignaturaUseCase
 } from '../../core/aplicaciones/asignatura/index.js'; 
 import { AsignaturaPGRepository } from '../../core/infraestructura/postgres/repositorio/asignatura.pg.repository.js';
-import { asignaturaRoutes } from './routes/asignatura.routes.js';
+import { asignaturaRoutes } from './rutas/asignatura.rutas.js';
 
 //programa academico
 import {
@@ -30,8 +30,8 @@ import {
   ActualizarProgramaAcademicoUseCase,
   EliminarProgramaAcademicoUseCase
 } from '../../core/aplicaciones/programa-academico/index.js';
-import { PostgresProgramaAcademicoRepository } from '../../core/infraestructrura/postgres/repositorio/postgres-programa-academico.repository.js';
-import { registerProgramaAcademicoRoutes } from './routes/programa-academico.routes.js';
+import { PostgresProgramaAcademicoRepository } from '../../core/infraestructura/postgres/repositorio/postgres-programa-academico.pg.repository.js';
+import { registerProgramaAcademicoRoutes } from './rutas/programa-academico.rutas.js';
 
 // --- Inyección de Dependencias Manual ---
 const programaRepository = new PostgresProgramaAcademicoRepository();
