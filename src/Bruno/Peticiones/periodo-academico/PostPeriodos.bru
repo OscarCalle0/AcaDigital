@@ -1,0 +1,24 @@
+meta {
+  name: PostPeriodos
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://127.0.0.1:3000/periodos
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nombre": "2025-IV",
+    "fechaInicio": "2025-07-15",
+    "fechaFin": "2025-12-20"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

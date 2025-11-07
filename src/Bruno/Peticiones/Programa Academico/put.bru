@@ -1,0 +1,27 @@
+meta {
+  name: Actualizar Programa Académico
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3000/programas-academicos/:id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: {{programa_id}}
+}
+
+body:json {
+  {
+    "nombre": "Ingeniería de Sistemas - Actualizado",
+    "descripcion": "Programa académico actualizado con nuevas competencias y tecnologías"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+

@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "AcaDigital-asignatura",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

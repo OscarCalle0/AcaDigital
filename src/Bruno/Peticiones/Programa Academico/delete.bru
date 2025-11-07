@@ -1,0 +1,20 @@
+meta {
+  name: Eliminar Programa Académico
+  type: http
+  seq: 5
+}
+
+delete {
+  url: http://localhost:3000/programas-academicos/:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: {{programa_id}}
+}
+
+settings {
+  encodeUrl: true
+}
+

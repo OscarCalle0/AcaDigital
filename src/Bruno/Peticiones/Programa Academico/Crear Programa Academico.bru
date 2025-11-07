@@ -1,0 +1,44 @@
+meta {
+  name: Crear Programa Academico
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/programas-academicos
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "nombre": "Ingeniería de Sistemas",
+    "descripcion": "Programa académico de ingeniería de sistemas con enfoque en desarrollo de software",
+    "nivel": "Pregrado",
+    "modalidad": "Presencial",
+    "duracionValor": 10,
+    "duracionUnidad": "semestres"
+  }
+}
+
+docs {
+  # Crear Programa Académico
+  
+  Crea un nuevo programa académico en el sistema.
+  
+  ## Campos requeridos:
+  - **nombre**: String (1-255 caracteres) - Nombre del programa
+  - **descripcion**: String (mínimo 1 carácter) - Descripción del programa
+  - **nivel**: Enum - Valores permitidos: "Técnico", "Pregrado", "Posgrado", "Doctorado"
+  - **modalidad**: Enum - Valores permitidos: "Presencial", "Virtual", "Semi-Presencial"
+  - **duracionValor**: Number (positivo) - Valor de la duración
+  - **duracionUnidad**: Enum - Valores permitidos: "meses", "años", "semestres", "trimestres"
+  
+  ## Respuesta exitosa (201):
+  Retorna el programa académico creado con su ID generado.
+}
+

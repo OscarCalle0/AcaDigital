@@ -1,0 +1,24 @@
+meta {
+  name: up_asignatura
+  type: http
+  seq: 2
+}
+
+put {
+  url: http://localhost:3000/api/v1/asignaturas/5
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+      "nombre": "Algoritmos Avanzados y Patrones",
+      "cargaHoraria": 70,
+      "tipo": "mixta"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

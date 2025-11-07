@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "periodo-academico",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

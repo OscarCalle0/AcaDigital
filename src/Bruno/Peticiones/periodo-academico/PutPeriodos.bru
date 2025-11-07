@@ -1,0 +1,22 @@
+meta {
+  name: PutPeriodos
+  type: http
+  seq: 2
+}
+
+put {
+  url: http://127.0.0.1:3000/periodos/55c3490a-9473-4b4b-a54c-78b545d2003a
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nombre": "2025-III"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

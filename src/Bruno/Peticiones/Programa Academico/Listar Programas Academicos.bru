@@ -1,0 +1,25 @@
+meta {
+  name: Listar Programas Academicos
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:3000/programas-academicos
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+docs {
+  # Listar Programas Académicos
+  
+  Obtiene todos los programas académicos registrados en el sistema.
+  
+  ## Respuesta exitosa (200):
+  Retorna un array con todos los programas académicos.
+}
+

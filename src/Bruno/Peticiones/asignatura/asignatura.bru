@@ -1,0 +1,24 @@
+meta {
+  name: asignatura
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/api/v1/asignaturas
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+      "nombre": "Estructuras de Datos",
+      "cargaHoraria": 60,
+      "tipo": "teorica"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
