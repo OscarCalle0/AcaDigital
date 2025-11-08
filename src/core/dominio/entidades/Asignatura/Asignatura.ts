@@ -1,41 +1,64 @@
+import type { IAsignatura } from "../../interfaces/IAsignatura.js";
+
 export enum TipoAsignatura {
-  TEORICA = 'teorica',
-  PRACTICA = 'practica',
-  MIXTA = 'mixta',
+    TEORICA = "teorica",
+    PRACTICA = "practica",
+    MIXTA = "mixta",
 }
 
-export class Asignatura {
-  readonly id: number | null;
-  nombre: string;
-  cargaHoraria: number;
-  tipo: TipoAsignatura;
-  readonly fechaCreacion: Date;
-  fechaActualizacion: Date;
+export class Asignatura implements IAsignatura {
+    private readonly id: number;
+    private nombre: string;
+    private cargaHoraria: number;
+    private tipo: TipoAsignatura;
+    private readonly fechaCreacion: Date;
+    private fechaActualizacion: Date;
 
-  constructor(
-    nombre: string,
-    cargaHoraria: number,
-    tipo: TipoAsignatura,
-    id: number | null = null,
-    fechaCreacion: Date = new Date(),
-    fechaActualizacion: Date = new Date(),
-  ) {
-    
-    if (!nombre || nombre.length < 3) {
-      throw new Error('El nombre de la asignatura es obligatorio y debe tener al menos 3 caracteres.');
-    }
-    if (cargaHoraria <= 0 || !Number.isInteger(cargaHoraria)) {
-      throw new Error('La carga horaria debe ser un número entero positivo.');
-    }
-    if (!Object.values(TipoAsignatura).includes(tipo)) {
-      throw new Error(`El tipo de asignatura debe ser uno de: ${Object.values(TipoAsignatura).join(', ')}.`);
+    constructor(
+        nombre: string,
+        cargaHoraria: number,
+        tipo: TipoAsignatura,
+        id?: number,
+        fechaCreacion?: Date,
+        fechaActualizacion?: Date,
+    ) {
+        if (!nombre || nombre.trim().length < 3) {
+            throw new Error('El nombre de la asignatura debe tener al menos 3 caracteres.');
+        }
+        if (cargaHoraria <= 0) {
+            throw new Error('La carga horaria debe ser un valor positivo (AC3).');
+        }
+
+        this.id = id || 0;
+        this.nombre = nombre.trim();
+        this.cargaHoraria = cargaHoraria;
+        this.tipo = tipo;
+        this.fechaCreacion = fechaCreacion || new Date();
+        this.fechaActualizacion = fechaActualizacion || new Date();
     }
 
-    this.id = id;
-    this.nombre = nombre;
-    this.cargaHoraria = cargaHoraria;
-    this.tipo = tipo;
-    this.fechaCreacion = fechaCreacion;
-    this.fechaActualizacion = fechaActualizacion;
-  }
+    public getId(): number { return this.id; }
+    public getNombre(): string { return this.nombre; }
+    public getCargaHoraria(): number { return this.cargaHoraria; }
+    public getTipo(): TipoAsignatura { return this.tipo; }
+    public getFechaCreacion(): Date { return this.fechaCreacion; }
+    public getFechaActualizacion(): Date { return this.fechaActualizacion; }
+
+    public actualizarInformacion(
+        nuevoNombre: string,
+        nuevaCargaHoraria: number,
+        nuevoTipo: TipoAsignatura
+    ): void {
+        if (!nuevoNombre || nuevoNombre.trim().length < 3) {
+            throw new Error('El nuevo nombre de la asignatura es obligatorio.');
+        }
+        if (nuevaCargaHoraria <= 0) {
+            throw new Error('La nueva carga horaria debe ser un valor positivo.');
+        }
+
+        this.nombre = nuevoNombre.trim();
+        this.cargaHoraria = nuevaCargaHoraria;
+        this.tipo = nuevoTipo;
+        this.fechaActualizacion = new Date();
+    }
 }

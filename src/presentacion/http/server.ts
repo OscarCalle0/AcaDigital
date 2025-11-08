@@ -20,7 +20,7 @@ import {
   EliminarAsignaturaUseCase
 } from '../../core/aplicaciones/asignatura/index.js'; 
 import { AsignaturaPGRepository } from '../../core/infraestructura/postgres/repositorio/asignatura.pg.repository.js';
-import { asignaturaRoutes } from './rutas/asignatura.rutas.js';
+import rutasAsignatura from './rutas/asignatura.rutas.js';
 
 //programa academico
 import {
@@ -68,7 +68,7 @@ registerProgramaAcademicoRoutes(
   actualizarProgramaUseCase,
   eliminarProgramaUseCase
 );
-server.register(asignaturaRoutes, {
+server.register(rutasAsignatura, {
     prefix: '/api/v1/asignaturas',
     dependencies: {
         crearAsignaturaUseCase,

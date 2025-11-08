@@ -1,123 +1,131 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { TipoAsignatura } from '../../../core/dominio/entidades/asignatura/Asignatura.js';
-import { CrearAsignaturaUseCase } from '../../../core/aplicaciones/asignatura/casos-uso/CrearAsignaturaUseCase.js';
-import { ObtenerAsignaturasUseCase } from '../../../core/aplicaciones/asignatura/casos-uso/ObtenerAsignaturasUseCase.js';
-import { ActualizarAsignaturaUseCase } from '../../../core/aplicaciones/asignatura/casos-uso/ActualizarAsignaturaUseCase.js';
-import { EliminarAsignaturaUseCase } from '../../../core/aplicaciones/asignatura/casos-uso/EliminarAsignaturaUseCase.js';
-import { AsignaturaPGRepository } from '../../../core/infraestructura/postgres/repositorio/asignatura.pg.repository.js';
 
-const repositorio = new AsignaturaPGRepository();
-const crearAsignaturaUseCase = new CrearAsignaturaUseCase(repositorio);
-const obtenerAsignaturasUseCase = new ObtenerAsignaturasUseCase(repositorio);
-const actualizarAsignaturaUseCase = new ActualizarAsignaturaUseCase(repositorio);
-const eliminarAsignaturaUseCase = new EliminarAsignaturaUseCase(repositorio);
+import { 
+    CrearAsignaturaUseCase, 
+    ObtenerAsignaturasUseCase, 
+    ObtenerAsignaturaPorIdUseCase,
+    ActualizarAsignaturaUseCase, 
+    EliminarAsignaturaUseCase,
+    CrearAsignaturaDTO,
+    ActualizarAsignaturaDTO
+} from '../../../core/aplicaciones/asignatura/index.js'; 
 
-const AsignaturaBodySchema = {
-  type: 'object',
-  required: ['nombre', 'cargaHoraria', 'tipo'],
-  properties: {
-    nombre: { type: 'string', minLength: 3 },
-    cargaHoraria: { type: 'number', minimum: 1 },
-    tipo: { type: 'string', enum: Object.values(TipoAsignatura) },
-  },
+type CrearRequest = FastifyRequest<{ Body: CrearAsignaturaDTO }>;
+type ObtenerRequest = FastifyRequest<{ Params: { id: number } }>;
+type ActualizarRequest = FastifyRequest<{ Params: { id: number }; Body: Omit<ActualizarAsignaturaDTO, 'id'> }>;
+
+const EsquemaCuerpoAsignatura = {
+    type: 'object',
+    required: ['nombre', 'cargaHoraria', 'tipo'],
+    properties: {
+        nombre: { type: 'string', minLength: 3 },
+        cargaHoraria: { type: 'number', minimum: 1 },
+        tipo: { type: 'string', enum: Object.values(TipoAsignatura) },
+    },
 };
 
-const AsignaturaResponseSchema = {
-  type: 'object',
-  properties: {
-    id: { type: 'number' },
-    nombre: { type: 'string' },
-    cargaHoraria: { type: 'number' },
-    tipo: { type: 'string', enum: Object.values(TipoAsignatura) },
-    fechaCreacion: { type: 'string', format: 'date-time' },
-    fechaActualizacion: { type: 'string', format: 'date-time' },
-  },
+const EsquemaRespuestaAsignatura = {
+    type: 'object',
+    properties: {
+        id: { type: 'number' },
+        nombre: { type: 'string' },
+        cargaHoraria: { type: 'number' },
+        tipo: { type: 'string', enum: Object.values(TipoAsignatura) },
+        fechaCreacion: { type: 'string', format: 'date-time' },
+        fechaActualizacion: { type: 'string', format: 'date-time' },
+    },
 };
 
-const paramsIdSchema = {
-  type: 'object',
-  properties: { id: { type: 'number' } },
-  required: ['id'],
+const EsquemaParametrosId = { type: 'object', properties: { id: { type: 'number' } }, required: ['id'] };
+
+const manejarError = (error: unknown, respuesta: FastifyReply) => {
+    const mensaje = (error as any)?.message;
+    if (typeof mensaje === 'string') {
+        if (mensaje.startsWith('409')) return respuesta.code(409).send({ error: mensaje.split(': ')[1]?.trim() });
+        if (mensaje.startsWith('404')) return respuesta.code(404).send({ error: mensaje.split(': ')[1]?.trim() });
+    }
+    console.error('Error en ruta:', error);
+    return respuesta.code(400).send({ error: mensaje || 'Error desconocido o validación de esquema fallida.' });
 };
 
-const errorHandler = (error: unknown, reply: FastifyReply) => {
-    const message = (error as Error).message;
-    if (message.startsWith('409')) return reply.code(409).send({ error: message.split(': ')[1] }); 
-    if (message.startsWith('404')) return reply.code(404).send({ error: message.split(': ')[1] }); 
-    return reply.code(400).send({ error: message || 'Error desconocido.' }); 
-};
+export default function rutasAsignatura(
+    fastify: FastifyInstance,
+    options: {
+        dependencies: {
+            crearAsignaturaUseCase: CrearAsignaturaUseCase;
+            listarAsignaturasUseCase: ObtenerAsignaturasUseCase;
+            obtenerAsignaturaPorIdUseCase: ObtenerAsignaturaPorIdUseCase;
+            actualizarAsignaturaUseCase: ActualizarAsignaturaUseCase;
+            eliminarAsignaturaUseCase: EliminarAsignaturaUseCase;
+        };
+    },
+    done: () => void,
+) {
+    const { crearAsignaturaUseCase, listarAsignaturasUseCase, obtenerAsignaturaPorIdUseCase, actualizarAsignaturaUseCase, eliminarAsignaturaUseCase } = options.dependencies;
+    const prefijo = '/';
 
-export async function asignaturaRoutes(fastify: FastifyInstance) {
+    fastify.post(
+        prefijo,
+        {
+            schema: { body: EsquemaCuerpoAsignatura, response: { 201: EsquemaRespuestaAsignatura }, tags: ['Asignaturas'] },
+        },
+        async (peticion: CrearRequest, respuesta: FastifyReply) => {
+            try {
+                const nuevaAsignatura = await crearAsignaturaUseCase.execute(peticion.body);
+                return respuesta.code(201).send(nuevaAsignatura);
+            } catch (error) {
+                return manejarError(error, respuesta);
+            }
+        }
+    );
 
-  fastify.post('/', {
-    schema: {
-      body: AsignaturaBodySchema,
-      response: { 201: AsignaturaResponseSchema },
-      tags: ['Asignaturas'],
-    }
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
-    try {
-      const nuevaAsignatura = await crearAsignaturaUseCase.execute(request.body as any);
-      return reply.code(201).send(nuevaAsignatura); 
-    } catch (error) {
-      return errorHandler(error, reply); 
-    }
-  });
+    fastify.get(
+        prefijo,
+        { schema: { response: { 200: { type: 'array', items: EsquemaRespuestaAsignatura } }, tags: ['Asignaturas'] } },
+        async (peticion: FastifyRequest, respuesta: FastifyReply) => {
+            const asignaturas = await listarAsignaturasUseCase.findAll();
+            return respuesta.send(asignaturas);
+        }
+    );
 
+    fastify.get(
+        prefijo + ':id',
+        { schema: { params: EsquemaParametrosId, response: { 200: EsquemaRespuestaAsignatura, 404: { type: 'object' } }, tags: ['Asignaturas'] } },
+        async (peticion: ObtenerRequest, respuesta: FastifyReply) => {
+            const asignatura = await obtenerAsignaturaPorIdUseCase.findById(peticion.params.id);
+            if (!asignatura) return respuesta.code(404).send({ error: `Asignatura con ID ${peticion.params.id} no encontrada.` });
+            return respuesta.send(asignatura);
+        }
+    );
 
-  fastify.get('/', {
-    schema: {
-      response: { 200: { type: 'array', items: AsignaturaResponseSchema } },
-      tags: ['Asignaturas'],
-    }
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
-    const asignaturas = await obtenerAsignaturasUseCase.findAll();
-    return reply.send(asignaturas); 
-  });
+    fastify.put(
+        prefijo + ':id',
+        { schema: { params: EsquemaParametrosId, body: EsquemaCuerpoAsignatura, response: { 200: EsquemaRespuestaAsignatura, 404: { type: 'object' }, 409: { type: 'object' } }, tags: ['Asignaturas'] } },
+        async (peticion: ActualizarRequest, respuesta: FastifyReply) => {
+            try {
+                const id = peticion.params.id;
+                // Uso de 'as any' para forzar el tipo si TypeScript se queja del spread
+                const asignaturaActualizada = await actualizarAsignaturaUseCase.execute({ id, ...peticion.body } as any); 
+                return respuesta.send(asignaturaActualizada);
+            } catch (error) {
+                return manejarError(error, respuesta);
+            }
+        }
+    );
 
-  fastify.get('/:id', {
-    schema: {
-      params: paramsIdSchema,
-      response: { 200: AsignaturaResponseSchema, 404: { type: 'object' } },
-      tags: ['Asignaturas'],
-    }
-  }, async (request: FastifyRequest<{ Params: { id: number } }>, reply: FastifyReply) => {
-    const asignatura = await obtenerAsignaturasUseCase.findById(request.params.id);
-    if (!asignatura) {
-      return reply.code(404).send({ error: `Asignatura con ID ${request.params.id} no encontrada.` }); // AC2
-    }
-    return reply.send(asignatura);
-  });
+    fastify.delete(
+        prefijo + ':id',
+        { schema: { params: EsquemaParametrosId, response: { 204: { type: 'null' }, 404: { type: 'object' } }, tags: ['Asignaturas'] } },
+        async (peticion: ObtenerRequest, respuesta: FastifyReply) => {
+            try {
+                await eliminarAsignaturaUseCase.execute(peticion.params.id);
+                return respuesta.code(204).send();
+            } catch (error) {
+                return manejarError(error, respuesta);
+            }
+        }
+    );
 
-  fastify.put('/:id', {
-    schema: {
-      params: paramsIdSchema,
-      body: AsignaturaBodySchema,
-      response: { 200: AsignaturaResponseSchema, 404: { type: 'object' }, 409: { type: 'object' } },
-      tags: ['Asignaturas'],
-    }
-  }, async (request: FastifyRequest<{ Params: { id: number } }>, reply: FastifyReply) => {
-    try {
-      const id = request.params.id;
-      const asignaturaActualizada = await actualizarAsignaturaUseCase.execute({ id, ...(request.body as any) });
-      return reply.send(asignaturaActualizada); 
-    } catch (error) {
-      return errorHandler(error, reply); 
-    }
-  });
-
-  fastify.delete('/:id', {
-    schema: {
-      params: paramsIdSchema,
-      response: { 204: { type: 'null' }, 404: { type: 'object' } },
-      tags: ['Asignaturas'],
-    }
-  }, async (request: FastifyRequest<{ Params: { id: number } }>, reply: FastifyReply) => {
-    try {
-      await eliminarAsignaturaUseCase.execute(request.params.id);
-      return reply.code(204).send(); 
-    } catch (error) {
-      return errorHandler(error, reply);
-    }
-  });
+    done();
 }

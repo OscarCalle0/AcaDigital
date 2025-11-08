@@ -1,6 +1,6 @@
 export * from './casos-uso/CrearAsignaturaUseCase.js';
 export * from './casos-uso/ObtenerAsignaturasUseCase.js';
-export * from './casos-uso/ObtenerAsignaturaPorIdUseCase.js';
+export * from './casos-uso/ObtenerAsignaturaPorIdUseCase.js'; 
 export * from './casos-uso/ActualizarAsignaturaUseCase.js';
 export * from './casos-uso/EliminarAsignaturaUseCase.js';
 

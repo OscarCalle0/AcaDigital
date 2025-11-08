@@ -1,18 +1,23 @@
-import { Asignatura } from '../../../dominio/entidades/asignatura/Asignatura.js';
+import { Asignatura, TipoAsignatura } from '../../../dominio/entidades/asignatura/Asignatura.js';
 import type { IAsignaturaRepositorio } from '../../../dominio/interfaces/repositorio/IAsignaturaRepositorio.js';
 import type { CrearAsignaturaDTO } from '../dtos/CrearAsignaturaDTO.js';
+import type { IAsignatura } from '../../../dominio/interfaces/IAsignatura.js';
 
 export class CrearAsignaturaUseCase {
-  constructor(private readonly repositorio: IAsignaturaRepositorio) {}
+    constructor(private readonly repositorio: IAsignaturaRepositorio) {}
 
-  async execute(request: CrearAsignaturaDTO): Promise<Asignatura> {
-    const asignaturaExistente = await this.repositorio.findByNombre(request.nombre);
-    if (asignaturaExistente) {
-      throw new Error(`409: Ya existe una asignatura con el nombre: ${request.nombre}`);
+    async execute(dto: CrearAsignaturaDTO): Promise<IAsignatura> {
+        const existe = await this.repositorio.findByNombre(dto.nombre);
+        if (existe) {
+            throw new Error(`409: La asignatura con nombre '${dto.nombre}' ya existe.`); 
+        }
+
+        const nuevaAsignatura = new Asignatura(
+            dto.nombre,
+            dto.cargaHoraria,
+            dto.tipo as TipoAsignatura 
+        );
+
+        return this.repositorio.save(nuevaAsignatura);
     }
-
-    const nuevaAsignatura = new Asignatura(request.nombre, request.cargaHoraria, request.tipo);
-
-    return this.repositorio.save(nuevaAsignatura);
-  }
 }
