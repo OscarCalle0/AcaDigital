@@ -1,9 +1,9 @@
-import { Asignatura } from '../../entidades/asignatura/Asignatura.js';
+import type { IAsignatura } from '../IAsignatura.js';
 
 export interface IAsignaturaRepositorio {
-  save(asignatura: Asignatura): Promise<Asignatura>;
-  findById(id: number): Promise<Asignatura | null>;
-  findAll(): Promise<Asignatura[]>;
+  save(asignatura: IAsignatura): Promise<IAsignatura>;
+  findById(id: number): Promise<IAsignatura | null>;
+  findAll(): Promise<IAsignatura[]>;
   delete(id: number): Promise<void>;
-  findByNombre(nombre: string): Promise<Asignatura | null>; 
+  findByNombre(nombre: string): Promise<IAsignatura | null>;
 }
