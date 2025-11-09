@@ -11,7 +11,6 @@ export class PeriodoAcademico implements IPeriodoAcademico {
     public createdAt: Date;
     public updatedAt: Date;
 
-    // Constructor que acepta PROPIEDADES para facilitar la reconstrucción desde la DB
     constructor(props: {
         id?: string;
         nombre: string;
@@ -25,14 +24,9 @@ export class PeriodoAcademico implements IPeriodoAcademico {
         this.nombre = props.nombre;
         this.fechaInicio = props.fechaInicio;
         this.fechaFin = props.fechaFin;
-        
-        // La lógica de estado se aplica si no se proporciona
         this.estado = props.estado || 'inactivo';
-
         this.createdAt = props.createdAt || new Date();
         this.updatedAt = props.updatedAt || new Date();
-        
-        // Llamada a lógica de dominio
         this.actualizarEstado();
     };
 
